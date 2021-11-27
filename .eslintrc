@@ -1,0 +1,27 @@
+{
+  "extends": ["airbnb", "airbnb-typescript", "airbnb/hooks"],
+  "env": {
+    "node": true,
+    "es6": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "tsx": true
+    },
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "no-console": "off",
+    "react/function-component-definition": [1, { "namedComponents": "arrow-function" }],
+    "react/no-unescaped-entities": "warn",
+    "react/jsx-props-no-spreading": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-throw-literal": "off"
+  }
+}
