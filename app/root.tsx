@@ -3,11 +3,9 @@ import type { LinksFunction } from 'remix';
 import {
   Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch, useLocation,
 } from 'remix';
-import {
-  Box, CssBaseline, StyledEngineProvider, ThemeProvider,
-} from '@mui/material';
+import { Box } from '@mui/material';
+import ThemeConfig from '~/themes';
 import Sidebar from '~/components/sidebar';
-import lightTheme from '~/themes/light';
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -115,14 +113,11 @@ const Layout = ({ children }: React.PropsWithChildren<{}>) => (
  */
 const App = () => (
   <Document>
-    <ThemeProvider theme={lightTheme}>
-      <StyledEngineProvider>
-        <CssBaseline />
-        <Layout>
-          <Outlet />
-        </Layout>
-      </StyledEngineProvider>
-    </ThemeProvider>
+    <ThemeConfig>
+      <Layout>
+        <Outlet />
+      </Layout>
+    </ThemeConfig>
   </Document>
 );
 

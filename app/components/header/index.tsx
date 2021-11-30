@@ -5,9 +5,11 @@ import React from 'react';
 
 type Props = {
   title: string,
-  children: React.ReactNode,
+  children?: React.ReactNode;
+} & typeof defaultProps;
+const defaultProps = {
+  children: <div />,
 };
-
 const Header = ({ title, children }: Props) => {
   const theme = useTheme();
   const { drawerWidth } = theme.mixins;
@@ -18,7 +20,7 @@ const Header = ({ title, children }: Props) => {
       sx={{
         bgcolor: 'white',
         width: { sm: `calc(100% - ${drawerWidth}px)` },
-        ml: { sm: `${drawerWidth}px` },
+        ml: { sm: `${drawerWidth}` },
         border: 0,
         // borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
         transition: (theme) => theme.transitions.create('background', {
@@ -36,5 +38,7 @@ const Header = ({ title, children }: Props) => {
     </AppBar>
   );
 };
+
+Header.defaultProps = defaultProps;
 
 export default Header;

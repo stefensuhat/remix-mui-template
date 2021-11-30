@@ -1,15 +1,15 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton, TextFieldProps } from '@mui/material';
+import { IconButton } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
-import React from 'react';
-import { UseControllerProps } from 'react-hook-form';
 import { SxProps } from '@mui/system';
 
-type Props = { width: number, styles: SxProps } & TextFieldProps & UseControllerProps & typeof defaultProps;
+interface Props { width?: string | number, placeholder?: string, styles?: SxProps, }
+
 const defaultProps = {
   width: 400,
   placeholder: 'Search',
+  styles: {},
 };
 
 const SearchField = ({ placeholder, width, styles }: Props) => (
@@ -31,5 +31,7 @@ const SearchField = ({ placeholder, width, styles }: Props) => (
 
   </Paper>
 );
+
+SearchField.defaultProps = defaultProps;
 
 export default SearchField;

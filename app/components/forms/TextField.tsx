@@ -4,12 +4,13 @@ import { useController, UseControllerProps } from 'react-hook-form';
 import {
   OutlinedInputProps, styled, TextField as MuiTextField, TextFieldProps,
 } from '@mui/material';
+import { BaseTextFieldProps } from '@mui/material/TextField/TextField';
 
-type Props = { name: string } & TextFieldProps & UseControllerProps & typeof defaultProps;
+type Props = { name: string } & BaseTextFieldProps & UseControllerProps & typeof defaultProps;
 const defaultProps = {
 };
 
-const RedditTextField = styled((props : TextFieldProps) => (
+const RedditTextField = styled((props : TextFieldProps & BaseTextFieldProps) => (
   <MuiTextField variant="filled" InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>} {...props} />
 ))(({ theme }) => ({
   '& .MuiInputLabel-root': {
@@ -25,7 +26,7 @@ const RedditTextField = styled((props : TextFieldProps) => (
     border: '1px solid #e2e2e1',
     overflow: 'hidden',
     borderRadius: 4,
-    backgroundColor: theme.palette.mode === 'light' ? '#fcfcfb' : '#2b2b2b',
+    backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : '#2b2b2b',
     transition: theme.transitions.create([
       'border-color',
       'background-color',

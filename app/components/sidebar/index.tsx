@@ -14,10 +14,8 @@ import {
   useTheme,
 } from '@mui/material';
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'remix';
 import routes from '~/utils/routes';
-
-const drawerWidth = 240;
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -25,7 +23,7 @@ const Sidebar = () => {
   const router = useLocation();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  // const { drawerWidth } = theme.mixins;
+  const { drawerWidth } = theme.mixins;
 
   const handleNavigate = async (route : any) => {
     await navigate(route.path);
