@@ -1,7 +1,8 @@
 import {
   Box,
   Button,
-  Divider, FormControlLabel,
+  Divider,
+  FormControlLabel,
   MenuItem,
   Paper,
   Stack,
@@ -15,15 +16,42 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
+import { ActionFunction, redirect, useSubmit } from 'remix';
 import { useDropzone } from 'react-dropzone';
 import { Delete } from '@mui/icons-material';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 import TextField from '~/components/forms/TextField';
 import Switch from '~/components/forms/Switch';
+import schema from '~/components/products/schema';
+
+// Note the "action" export name, this will handle our form POST
+export const action: ActionFunction = async ({ request }):Promise<Response> => {
+  const formData = await request.formData();
+
+  console.log('formData: ', formData);
+
+  // const project = await createProject(formData);
+  return redirect('/products/new');
+};
 
 const ProductForm = () => {
-  const { control } = useForm();
+  const method = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: '',
+      brand: '',
+      price: '',
+    },
+  });
+  const submit = useSubmit();
+
   const [files, setFiles] :any = useState([]);
+
+  const onSubmit = (data: any) => {
+    submit(data, { method: 'post' });
+  };
+
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
       const newFiles = acceptedFiles.map((file) => Object.assign(file, {
@@ -40,13 +68,32 @@ const ProductForm = () => {
   }, [files]);
 
   return (
-    <form>
-      <Paper elevation={8} sx={{ p: 2, mb: 3 }}>
+    <form method="post" onSubmit={method.handleSubmit(onSubmit)}>
+      <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
+
         <Typography variant="h6">General Information</Typography>
         <Divider sx={{ my: 2 }} />
-        <TextField margin="normal" fullWidth name="name" label="Name" control={control} />
-        <TextField margin="normal" fullWidth name="brand" label="Brand" control={control} />
-        <TextField margin="normal" fullWidth name="price" label="Price" control={control} />
+        <Controller
+          name="name"
+          control={method.control}
+          render={(field) => (
+            <TextField {...field} fullWidth margin="normal" label="Name" />
+          )}
+        />
+        <Controller
+          name="brand"
+          control={method.control}
+          render={(field) => (
+            <TextField {...field} fullWidth margin="normal" label="Brand" />
+          )}
+        />
+        <Controller
+          name="price"
+          control={method.control}
+          render={(field) => (
+            <TextField {...field} fullWidth margin="normal" label="Price" />
+          )}
+        />
 
         <Paper variant="outlined" {...getRootProps({ sx: { p: 2, my: 2, borderStyle: 'dashed' } })}>
           <input {...getInputProps()} />
@@ -65,7 +112,7 @@ const ProductForm = () => {
         </Paper>
 
       </Paper>
-      <Paper elevation={8} sx={{ p: 2 }}>
+      <Paper variant="outlined" sx={{ p: 2 }}>
         <Box display="flex" justifyContent="space-between">
           <Typography variant="h6" sx={{ mr: 2 }}>Variant</Typography>
 
@@ -122,7 +169,7 @@ const ProductForm = () => {
       </Paper>
 
       <Box display="flex" justifyContent="flex-end" sx={{ mt: 3 }}>
-        <Button size="large" variant="contained">Save</Button>
+        <Button size="large" type="submit" variant="contained">Save</Button>
       </Box>
     </form>
   );

@@ -15,12 +15,12 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { useLocation, useNavigate } from 'remix';
-import routes from '~/utils/routes';
+import router from '~/utils/router';
 
 const Sidebar = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  const router = useLocation();
+  const location = useLocation();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const { drawerWidth } = theme.mixins;
@@ -65,14 +65,15 @@ const Sidebar = () => {
 
         <Box flexGrow={1} borderBottom={1} borderColor="divider" p={2}>
           <List component="ul" subheader={<li />}>
-            {routes.map((route) => {
-              const isSelected = route.label === router.pathname;
+            {router.map((route : any) => {
+              const splitPath = location.pathname.split('/').filter(Boolean);
+              const isSelected = route.label.toLowerCase() === splitPath[0];
 
               return (
                 <ListItemButton
                   key={route.label}
                   selected={isSelected}
-                  sx={{ borderRadius: 1 }}
+                  sx={{ borderRadius: 1, '&.Mui-selected': { color: 'primary.main' } }}
                   onClick={() => handleNavigate(route)}
                 >
                   <ListItemIcon>

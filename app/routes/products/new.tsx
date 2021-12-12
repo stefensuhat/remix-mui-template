@@ -4,10 +4,7 @@ import Content from '~/components/content';
 import Header from '~/components/header';
 import ProductForm from '~/components/products/ProductForm';
 
-const propTypes = {};
-const defaultProps = {};
-
-const ProductCreate = () => (
+const ProductCreateRoute = () => (
   <>
     <Header title="Add Product">
       <Box flexGrow={1} />
@@ -20,7 +17,4 @@ const ProductCreate = () => (
   </>
 );
 
-ProductCreate.propTypes = propTypes;
-ProductCreate.defaultProps = defaultProps;
-
-export default ProductCreate;
+export default ProductCreateRoute;
